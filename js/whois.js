@@ -157,7 +157,7 @@ function getResult(){
 	for (var i=0;i<relations.length;i++) {
 		if (relations_network[result[0]]==null) {
 			interrupt_result = "confused_result";
-			return;
+			break;
 		} 
 		calculateCurrent(relations[i]);
 	}

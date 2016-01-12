@@ -64,7 +64,9 @@ html,body,.main
 #btn-reset{
 	color: #FF0000;
 }
-
+#final-answer-display{
+	height: 100%;
+}
 .answer-image{
 	height: 100%;
 }
