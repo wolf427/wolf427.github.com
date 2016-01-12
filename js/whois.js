@@ -64,7 +64,7 @@ function bindClick(){
 	$("#btn-reset").click(function(){
 		$("#relationship-input").text("");
 		relations = new Array();
-		$("#final-answer-display").text("");
+		$("#final-answer-display").html("<img class='answer-image'/>");
 		result = new Array();
 		result.push("me");
 		level = 0;
@@ -138,9 +138,9 @@ $.get("resources/relations.json",function(data){
 },"json");
 
 function getResult(){
-//	var level = 0;
-//	var branch = "";
-//	var age = "0";
+	level = 0;
+	branch = "";
+	age = "0";
 //	
 //	var lastRelation = relations[relations.length-1];
 //	if(lastRelation=="father"||lastRelation=="bbrother"||lastRelation=="lbrother"
@@ -150,14 +150,20 @@ function getResult(){
 //		||lastRelation=="wife"||lastRelation=="daughter"){
 //		sex = "female";
 //	}
-//	var result = new Array();
+	result = new Array();
+	result.push("me");
+	var interrupt_result = "";
 	//var relations_copy = subCycle();
 	for (var i=0;i<relations.length;i++) {
+		if (relations_network[result[0]]==null) {
+			interrupt_result = "confused_result";
+			return;
+		} 
 		calculateCurrent(relations[i]);
 	}
 		
 //		switch(relations[i]){
-	getFinalResult();
+	getFinalResult(interrupt_result);
 	//currentResult(level,branch,result,age);
 //	getFinalResult(level,branch,result,age);
 }
@@ -352,12 +358,20 @@ function currentResult(level,branch,result,age){
 	
 }
 
-function getFinalResult(){
+function getFinalResult(interrupt_result){
 	if (level>5) {
 		$("#final-answer-display").text("祖宗");
 		return;
 	}else if(level<-5){
 		$("#final-answer-display").text("小祖宗");
+		return;
+	}
+	if(interrupt_result!=""){
+		if(interrupt_result=="confused_result"){
+			var image_index = Math.floor(Math.random() * ( 4 + 1));
+			var image_path = "img"+image_index+".jpg";
+			$(".answer-image").attr("src","img/"+image_path);
+		}
 		return;
 	}
 	if (age=="unknown") {
@@ -369,7 +383,7 @@ function getFinalResult(){
 			if (branch=="f") {
 				$("#final-answer-display").text("这人比你爸大么？");
 			} else{
-				$("#final-answer-display").text("这人比你大么？");
+				$("#final-answer-display").text("这人比你妈大么？");
 			}
 			activeYN(function(){age="big";getFinalResult();},function(){age="little";getFinalResult();});
 			return;
@@ -398,6 +412,10 @@ function getFinalResult(){
 	var textResult = appellations[finalResult];
 	if(textResult==null||textResult==""){
 		textResult="未知";
+		var image_index = Math.floor(Math.random() * ( 4 + 1));
+		var image_path = "img"+image_index+".jpg";
+		$(".answer-image").attr("src","img/"+image_path);
+		return;
 	}
 	$("#final-answer-display").text(textResult);
 		return;
