@@ -52,8 +52,8 @@ function bindClick(){
 			
 		}
 		relations.push($(this).val());
-		getCurrentResult($(this).val());
-		checkResult(result);
+		//getCurrentResult($(this).val());
+		//checkResult(result);
 		if (relationship_input!=null && relationship_input!="") {
 			relationship_input += "的"+relationText;
 		} else{
@@ -86,19 +86,58 @@ function bindClick(){
 		relations.pop();
 	});
 }
-
-function subCycle(){
-	var relations_str = relations.toString();
-	var i = Math.max(relations_str.lastIndexOf("son"),relations_str.lastIndexOf("daughter"));
-	var j = Math.min(relations_str.lastIndexOf("father"),relations_str.lastIndexOf("mother"));
+Array.prototype.indexOf = function(e){
+  for(var i=0,j; j=this[i]; i++){
+    if(j==e){return i;}
+  }
+  return 10000;
 }
+Array.prototype.lastIndexOf = function(e){
+  for(var i=this.length-1,j; j=this[i]; i--){
+    if(j==e){return i;}
+  }
+  return -1;
+}
+function subCycle(){
+	var relations_copy = new Array();
+	for (var i=0;i<relations.length;i++) {
+		relations_copy.push(relations[i]);
+	}
+	console.log(relations_copy);
+	var i = Math.max(relations_copy.lastIndexOf("son"),relations_copy.lastIndexOf("daughter"));
+	var j = Math.min(relations_copy.indexOf("father"),relations_copy.indexOf("mother"));
+//	while(i!=-1&&j!=10000&&i<j)
+	{
+		console.log(i+"  "+j);
+		var flag = true;
+		for (var k=i;i<j;k++) {
+			if (relations_copy[k]=="husband"||relations_copy[k]=="wife") {
+				flag=false;
+				break;
+			}
+		}
+		if (flag) {
+			if (relations_copy[i]=="son"&&relations_copy[i]=="mother") {
+				relations_copy.splice(i,j-i+1,"wife");
+			} else if (relations_copy[i]=="daughter"&&relations_copy[i]=="father") {
+				relations_copy.splice(i,j-i+1,"husband");
+			}else{
+				relations_copy.splice(i,j-i+1);
+			}
+		}
+		i = Math.max(relations_copy.lastIndexOf("son"),relations_copy.lastIndexOf("daughter"));
+		j = Math.min(relations_copy.indexOf("father"),relations_copy.indexOf("mother"));
+	}
+	return relations_copy;
+}
+
 
 var relations_network;
 $.get("resources/relations.json",function(data){
 	relations_network = data;
 },"json");
 
-function getCurrentResult(next_relation){
+function getResult(){
 //	var level = 0;
 //	var branch = "";
 //	var age = "0";
@@ -112,10 +151,18 @@ function getCurrentResult(next_relation){
 //		sex = "female";
 //	}
 //	var result = new Array();
-//	result.push("me");
-//	for (var i=0;i<relations.length;i++) {
+	//var relations_copy = subCycle();
+	for (var i=0;i<relations.length;i++) {
+		calculateCurrent(relations[i]);
+	}
 		
 //		switch(relations[i]){
+	getFinalResult();
+	//currentResult(level,branch,result,age);
+//	getFinalResult(level,branch,result,age);
+}
+
+function calculateCurrent(next_relation){
 	switch(next_relation){
 			case "father":{
 				branch = addBranch(result,branch);
@@ -158,13 +205,13 @@ function getCurrentResult(next_relation){
 			case "husband":{
 				branch = toggleBranch(result,branch);
 				result = queryRelations(result,"r_husband");
-				age = ageReset(age);
+//				age = ageReset(age);
 				break;
 			}
 			case "wife":{
 				branch = toggleBranch(result,branch);
 				result = queryRelations(result,"r_wife");
-				age = ageReset(age);
+//				age = ageReset(age);
 				break;
 			}
 			case "daughter":{
@@ -182,8 +229,6 @@ function getCurrentResult(next_relation){
 				break;
 			}
 		}
-	currentResult(level,branch,result,age);
-//	getFinalResult(level,branch,result,age);
 }
 
 function checkResult(){
@@ -212,14 +257,16 @@ function activeYN(function_yes,function_no){
 	});
 	$("#calculate_result").attr("disabled","disabled");
 	$("#btn-yes").bind("click",function(){
-		function_yes();
+		
 		resetAllButton();
 		$("#final-answer-display").text("");
+		function_yes();
 	});
 	$("#btn-no").bind("click",function(){
-		function_no();
+		
 		resetAllButton();
 		$("#final-answer-display").text("");
+		function_no();
 	});
 }
 
@@ -265,6 +312,8 @@ function queryRelations(result,relation){
 			innerResult.push(relations_network[result[i]][relation]);
 		}
 	}
+	//your father's sister's son is your "biaoge".
+	if(result[0]=="aunt"){branch="m";}
 	
 	return innerResult;
 }
@@ -312,10 +361,10 @@ function getFinalResult(){
 		return;
 	}
 	if (age=="unknown") {
-		console.log(level);
 		if(level==0){
 			$("#final-answer-display").text("这人比你大么？");
 			activeYN(function(){age="big";getFinalResult();},function(){age="little";getFinalResult();});
+			return;
 		}else if(level==1){
 			if (branch=="f") {
 				$("#final-answer-display").text("这人比你爸大么？");
@@ -323,8 +372,10 @@ function getFinalResult(){
 				$("#final-answer-display").text("这人比你大么？");
 			}
 			activeYN(function(){age="big";getFinalResult();},function(){age="little";getFinalResult();});
+			return;
+		}else if (level<0){
+			age = 0;
 		}
-		return;
 	}
 
 	var finalResult = "";
@@ -335,9 +386,15 @@ function getFinalResult(){
 	if(branch!=""){
 		finalResult += ("_"+branch);
 	}
+	console.log("==============");
 	console.log(result);
 	console.log(finalResult);
 	console.log("==============");
+	
+	
+	if(result[0]=="me"||result[0]=="father"||result[0]=="mother"){
+		finalResult = result[0];
+	}
 	var textResult = appellations[finalResult];
 	if(textResult==null||textResult==""){
 		textResult="未知";
