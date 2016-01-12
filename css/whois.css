@@ -22,7 +22,7 @@ html,body,.main
 .answer-div .relationship-show{
 	width: 100%;
 	height: 40%;
-	font-size: 1.5em;
+	font-size: 0.8em;
 }
 .answer-div .final-answer{
 	width: 100%;
@@ -54,7 +54,7 @@ html,body,.main
 	height: 100%;
 	background: #FFFFFF;
 	border: 0px solid #000000;
-	font-size: 4em;
+	font-size: 3.2em;
 }
 
 .col-equal-block button{

@@ -377,7 +377,7 @@ function getFinalResult(interrupt_result){
 	if (age=="unknown") {
 		if(level==0){
 			$("#final-answer-display").text("这人比你大么？");
-			activeYN(function(){age="big";getFinalResult();},function(){age="little";getFinalResult();});
+			activeYN(function(){age="big";getFinalResult(interrupt_result);},function(){age="little";getFinalResult(interrupt_result);});
 			return;
 		}else if(level==1){
 			if (branch=="f") {
@@ -385,7 +385,7 @@ function getFinalResult(interrupt_result){
 			} else{
 				$("#final-answer-display").text("这人比你妈大么？");
 			}
-			activeYN(function(){age="big";getFinalResult();},function(){age="little";getFinalResult();});
+			activeYN(function(){age="big";getFinalResult(interrupt_result);},function(){age="little";getFinalResult(interrupt_result);});
 			return;
 		}else if (level<0){
 			age = 0;
