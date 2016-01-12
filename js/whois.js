@@ -62,7 +62,7 @@ function bindClick(){
 		$("#relationship-input").text(relationship_input);
 	});
 	$("#btn-reset").click(function(){
-		$("#relationship-input").text("");
+		$("#relationship-input").text("我");
 		relations = new Array();
 		$("#final-answer-display").html("<img class='answer-image'/>");
 		result = new Array();
@@ -80,7 +80,7 @@ function bindClick(){
 			relation_input = relation_input.substring(0,relation_input.lastIndexOf("的"));
 		}
 		else{
-			relation_input = "";
+			relation_input = "我";
 		}
 		$("#relationship-input").text(relation_input);
 		relations.pop();
