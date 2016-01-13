@@ -30,6 +30,8 @@
 	"little_cousin_sister_m":"表妹",
 	"brother_son":"侄子",
 	"sister_son":"外甥",
+	"brother_daughter":"侄女",
+	"sister_daughter":"外甥女",
 	"grand_father_f":"爷爷",
 	"grand_mother_f":"奶奶",
 	"grand_father_m":"外公",
@@ -55,5 +57,9 @@
 	"big_husband_sister":"大姑子",
 	"little_husband_sister":"小姑子",
 	"big_grand_mother_brother_f":"舅爷爷",
-	"little_grand_mother_brother_f":"舅爷爷"
+	"little_grand_mother_brother_f":"舅爷爷",
+	"son_wife_father":"亲家公",
+	"son_wife_mother":"亲家母",
+	"daughter_husband_father":"亲家公",
+	"daughter_husband_father":"亲家母"
 }

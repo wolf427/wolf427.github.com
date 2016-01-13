@@ -4,6 +4,18 @@ result.push("me");
 var level = 0;
 var branch = "";
 var age = "0";
+var currentSex = "0";
+
+function resetParameters(){
+	level = 0;
+	branch = "";
+	age = "0";
+	result = new Array();
+	result.push("me");
+	$("#final-answer-display").html("<img class='answer-image'/>");
+	currentSex = "0";
+}
+
 function bindClick(){
 	$("button[name='btn-relation']").click(function(){
 		var relationship_input = $("#relationship-input").text();
@@ -64,12 +76,7 @@ function bindClick(){
 	$("#btn-reset").click(function(){
 		$("#relationship-input").text("我");
 		relations = new Array();
-		$("#final-answer-display").html("<img class='answer-image'/>");
-		result = new Array();
-		result.push("me");
-		level = 0;
-		branch = "";
-		age = "0";
+		resetParameters();
 		resetAllButton();
 	});
 	
@@ -138,34 +145,14 @@ $.get("resources/relations.json",function(data){
 },"json");
 
 function getResult(){
-	level = 0;
-	branch = "";
-	age = "0";
-//	
-//	var lastRelation = relations[relations.length-1];
-//	if(lastRelation=="father"||lastRelation=="bbrother"||lastRelation=="lbrother"
-//		||lastRelation=="husband"||lastRelation=="son"){
-//		sex = "male";
-//	}else if(lastRelation=="mother"||lastRelation=="lsister"||lastRelation=="bsister"
-//		||lastRelation=="wife"||lastRelation=="daughter"){
-//		sex = "female";
-//	}
-	result = new Array();
-	result.push("me");
-	var interrupt_result = "";
-	//var relations_copy = subCycle();
+	
+	resetParameters();
+	
 	for (var i=0;i<relations.length;i++) {
-		if (relations_network[result[0]]==null) {
-			interrupt_result = "confused_result";
-			break;
-		} 
 		calculateCurrent(relations[i]);
 	}
 		
-//		switch(relations[i]){
-	getFinalResult(interrupt_result);
-	//currentResult(level,branch,result,age);
-//	getFinalResult(level,branch,result,age);
+	getFinalResult();
 }
 
 function calculateCurrent(next_relation){
@@ -175,6 +162,8 @@ function calculateCurrent(next_relation){
 				result = queryRelations(result,"r_father");
 				age = ageReset(age);
 				level++;
+				if(currentSex!="gay"&&currentSex!="lesbian")
+					currentSex = "f";
 				break;
 			}
 			case "mother":{
@@ -182,42 +171,62 @@ function calculateCurrent(next_relation){
 				result = queryRelations(result,"r_mother");
 				age = ageReset(age);
 				level++;
+				if(currentSex!="gay"&&currentSex!="lesbian")
+					currentSex = "m";
 				break;
 			}
 			case "bbrother":{
 				branch = addBranch(result,branch);
 				result = queryRelations(result,"r_big_brother");
 				age = ageBigger(age);
+				if(currentSex!="gay"&&currentSex!="lesbian")
+					currentSex = "f";
 				break;
 			}
 			case "lsister":{
 				branch = addBranch(result,branch);
 				result = queryRelations(result,"r_big_sister");
 				age = ageLittle(age);
+				if(currentSex!="gay"&&currentSex!="lesbian")
+					currentSex = "m";
 				break;
 			}
 			case "bsister":{
 				branch = addBranch(result,branch);
 				result = queryRelations(result,"r_big_sister");
 				age = ageBigger(age);
+				if(currentSex!="gay"&&currentSex!="lesbian")
+					currentSex = "m";
 				break;
 			}
 			case "lbrother":{
 				branch = addBranch(result,branch);
 				result = queryRelations(result,"r_little_brother");
 				age = ageLittle(age);
+				if(currentSex!="gay"&&currentSex!="lesbian")
+					currentSex = "f";
 				break;
 			}
 			case "husband":{
 				branch = toggleBranch(result,branch);
 				result = queryRelations(result,"r_husband");
 //				age = ageReset(age);
+				if (currentSex == "f") {
+					currentSex = "gay";
+				} else{
+					currentSex = "f";
+				}
 				break;
 			}
 			case "wife":{
 				branch = toggleBranch(result,branch);
 				result = queryRelations(result,"r_wife");
 //				age = ageReset(age);
+				if (currentSex == "m") {
+					currentSex = "lesbian";
+				} else{
+					currentSex = "f";
+				}
 				break;
 			}
 			case "daughter":{
@@ -225,6 +234,8 @@ function calculateCurrent(next_relation){
 				result = queryRelations(result,"r_daughter");
 				age = "unknown";
 				level--;
+				if(currentSex!="gay"&&currentSex!="lesbian")
+					currentSex = "m";
 				break;
 			}
 			case "son":{
@@ -232,6 +243,8 @@ function calculateCurrent(next_relation){
 				result = queryRelations(result,"r_son");
 				age = "unknown";
 				level--;
+				if(currentSex!="gay"&&currentSex!="lesbian")
+					currentSex = "f";
 				break;
 			}
 		}
@@ -311,6 +324,10 @@ function ageReset(age){
 function queryRelations(result,relation){
 	var innerResult = new Array();
 	for (var i=0;i<result.length;i++) {
+		if(relations_network[result[i]]==null){
+			innerResult.push(result[i]+"_"+relation.substr(2));
+			continue;
+		}
 		var next_relations = relations_network[result[i]][relation];
 		if(next_relations instanceof Array){
 			innerResult.push.apply(innerResult,relations_network[result[i]][relation]);
@@ -319,7 +336,7 @@ function queryRelations(result,relation){
 		}
 	}
 	//your father's sister's son is your "biaoge".
-	if(result[0]=="aunt"){branch="m";}
+	if(result[0]=="aunt"&&(relation=="r_daughter"||relation=="r_son")){branch="m";}
 	
 	return innerResult;
 }
@@ -358,37 +375,32 @@ function currentResult(level,branch,result,age){
 	
 }
 
-function getFinalResult(interrupt_result){
-	if (level>5) {
+function getFinalResult(){
+	if (level>4) {
 		$("#final-answer-display").text("祖宗");
 		return;
-	}else if(level<-5){
+	}else if(level<-3){
 		$("#final-answer-display").text("小祖宗");
 		return;
 	}
-	if(interrupt_result!=""){
-		if(interrupt_result=="confused_result"){
-			var image_index = Math.floor(Math.random() * ( 4 + 1));
-			var image_path = "img"+image_index+".jpg";
-			$(".answer-image").attr("src","img/"+image_path);
-		}
-		return;
-	}
+	
 	if (age=="unknown") {
 		if(level==0){
 			$("#final-answer-display").text("这人比你大么？");
-			activeYN(function(){age="big";getFinalResult(interrupt_result);},function(){age="little";getFinalResult(interrupt_result);});
+			activeYN(function(){age="big";getFinalResult();},function(){age="little";getFinalResult();});
 			return;
 		}else if(level==1){
-			if (branch=="f") {
+			if (branch=="f"&&result[0]=="uncle") {
 				$("#final-answer-display").text("这人比你爸大么？");
+				activeYN(function(){age="big";getFinalResult();},function(){age="little";getFinalResult();});
+				return;
 			} else{
-				$("#final-answer-display").text("这人比你妈大么？");
+				age="big";
 			}
-			activeYN(function(){age="big";getFinalResult(interrupt_result);},function(){age="little";getFinalResult(interrupt_result);});
-			return;
 		}else if (level<0){
-			age = 0;
+			age = "0";
+		}else{
+			age = "0";
 		}
 	}
 
@@ -412,8 +424,15 @@ function getFinalResult(interrupt_result){
 	var textResult = appellations[finalResult];
 	if(textResult==null||textResult==""){
 		textResult="未知";
-		var image_index = Math.floor(Math.random() * ( 4 + 1));
-		var image_path = "img"+image_index+".jpg";
+		var image_index;
+		var image_path = "";
+		if(currentSex=="gay"||currentSex=="lesbian"){
+			image_index = Math.floor(Math.random() * ( 0 + 1));
+			image_path = "gay"+image_index+".jpg";
+		}else{
+			image_index = Math.floor(Math.random() * ( 4 + 1));
+			image_path = "img"+image_index+".jpg";
+		}
 		$(".answer-image").attr("src","img/"+image_path);
 		return;
 	}
