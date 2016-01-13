@@ -309,9 +309,6 @@ $.get("resources/appellation.json",function(data){
 	appellations = data;
 },"json");
 
-function currentResult(level,branch,result,age){
-	
-}
 
 function getFinalResult(){
 	if (level>4) {

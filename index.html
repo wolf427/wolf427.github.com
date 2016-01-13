@@ -14,6 +14,10 @@
 					getResult();
 				});
 				var href = window.location.href;
+				var dialect = href.substr(href.indexOf("?"));
+				if(dialect==null||dialect==""){
+					dialect = "default";
+				}
 			});
 			
 		</script>
