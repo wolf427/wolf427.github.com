@@ -64,8 +64,6 @@ function bindClick(){
 			
 		}
 		relations.push($(this).val());
-		//getCurrentResult($(this).val());
-		//checkResult(result);
 		if (relationship_input!=null && relationship_input!="") {
 			relationship_input += "的"+relationText;
 		} else{
@@ -92,50 +90,6 @@ function bindClick(){
 		$("#relationship-input").text(relation_input);
 		relations.pop();
 	});
-}
-Array.prototype.indexOf = function(e){
-  for(var i=0,j; j=this[i]; i++){
-    if(j==e){return i;}
-  }
-  return 10000;
-}
-Array.prototype.lastIndexOf = function(e){
-  for(var i=this.length-1,j; j=this[i]; i--){
-    if(j==e){return i;}
-  }
-  return -1;
-}
-function subCycle(){
-	var relations_copy = new Array();
-	for (var i=0;i<relations.length;i++) {
-		relations_copy.push(relations[i]);
-	}
-	console.log(relations_copy);
-	var i = Math.max(relations_copy.lastIndexOf("son"),relations_copy.lastIndexOf("daughter"));
-	var j = Math.min(relations_copy.indexOf("father"),relations_copy.indexOf("mother"));
-//	while(i!=-1&&j!=10000&&i<j)
-	{
-		console.log(i+"  "+j);
-		var flag = true;
-		for (var k=i;i<j;k++) {
-			if (relations_copy[k]=="husband"||relations_copy[k]=="wife") {
-				flag=false;
-				break;
-			}
-		}
-		if (flag) {
-			if (relations_copy[i]=="son"&&relations_copy[i]=="mother") {
-				relations_copy.splice(i,j-i+1,"wife");
-			} else if (relations_copy[i]=="daughter"&&relations_copy[i]=="father") {
-				relations_copy.splice(i,j-i+1,"husband");
-			}else{
-				relations_copy.splice(i,j-i+1);
-			}
-		}
-		i = Math.max(relations_copy.lastIndexOf("son"),relations_copy.lastIndexOf("daughter"));
-		j = Math.min(relations_copy.indexOf("father"),relations_copy.indexOf("mother"));
-	}
-	return relations_copy;
 }
 
 
@@ -250,22 +204,6 @@ function calculateCurrent(next_relation){
 		}
 }
 
-function checkResult(){
-	if(result.length<2)
-		return ;
-	for(var i=0;i<result.length;i++){
-		if(result[i]=="me"){
-			$("#final-answer-display").text("这是你么？");
-			activeYN(function(){result=["me"];age="0";},function(){result.splice(i,1);});
-		}else if(result[i]=="father"){
-			$("#final-answer-display").text("这是你爸么？");
-			activeYN(function(){result=["father"];age="0";},function(){result.splice(i,1);});
-		}else if(result[i]=="mother"){
-			$("#final-answer-display").text("这是你妈么？");
-			activeYN(function(){result=["mother"];age="0";},function(){result.splice(i,1);});
-		}
-	}
-}
 
 function activeYN(function_yes,function_no){
 	$("button[name='btn-relation']").each(function(){
@@ -412,11 +350,6 @@ function getFinalResult(){
 	if(branch!=""){
 		finalResult += ("_"+branch);
 	}
-	console.log("==============");
-	console.log(result);
-	console.log(finalResult);
-	console.log("==============");
-	
 	
 	if(result[0]=="me"||result[0]=="father"||result[0]=="mother"){
 		finalResult = result[0];
@@ -437,6 +370,6 @@ function getFinalResult(){
 		return;
 	}
 	$("#final-answer-display").text(textResult);
-		return;
+	return;
 	
 }
