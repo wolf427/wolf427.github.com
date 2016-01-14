@@ -24,6 +24,7 @@ function initAppellations(address){
 			appellations = data;
 		},"json");
 		$("head title").append(entry["address_name"]);
+		$("#current-dialect").text(entry["address_name"]);
 	},"json");
 }
 

@@ -1,0 +1,30 @@
+<!DOCTYPE html PUBLIC "-//WAPFORUM//DTD XHTML Mobile 1.0//EN" "http://www.wapforum.org/DTD/xhtml-mobile10.dtd">
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"/>
+		<title>"叫人"计算器</title>
+		<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.1.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="css/whois.css"/>
+		<script type="text/javascript">
+			$(function(){
+				$.get("resources/dialect_appellation.json",function(data){
+					$.each(data,function(name,value) {
+						$("#city-select").append("<option value='/index.html?dialect="+name+"'>"+value["address_name"]+"</option>");
+					});
+				},"json");
+			});
+		</script>
+	</head>
+	<body>
+		<div class="main">
+			<div class="main-title">
+				<p>“叫人”计算器</p>
+			</div>
+			<div class="select-div">
+				<select id="city-select" name="" onchange="window.location=this.value;">
+				</select>
+			</div>
+		</div>
+	</body>
+</html>
