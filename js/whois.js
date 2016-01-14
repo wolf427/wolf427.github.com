@@ -367,6 +367,7 @@ function getFinalResult(){
 		finalResult = result[0];
 	}
 	var textResult = appellations[finalResult];
+	console.log(finalResult);
 	if(textResult==null||textResult==""){
 		
 		textResult="未知";
@@ -377,7 +378,7 @@ function getFinalResult(){
 			image_path = "gay"+image_index+".jpg";
 		}else{
 			
-			image_index = Math.floor(Math.random() * ( 4 + 1));
+			image_index = Math.floor(Math.random() * ( 10 + 1));
 			image_path = "img"+image_index+".jpg";
 		}
 		$(".answer-image").attr("src","img/"+image_path);
