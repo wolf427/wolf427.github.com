@@ -96,3 +96,12 @@ html,body,.main
 	border-radius:50%;
 	color:#777777;
 }
+
+#btn-submit{
+	margin-top: 1em;
+	width: 60%;
+	background: #C5C5C5;
+	border: 1px solid #000000;
+	border-radius:10px;
+	font-size: 1.5em;
+}

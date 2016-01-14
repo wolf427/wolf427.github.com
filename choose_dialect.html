@@ -13,6 +13,10 @@
 						$("#city-select").append("<option value='/index.html?dialect="+name+"'>"+value["address_name"]+"</option>");
 					});
 				},"json");
+				$("#btn-submit").click(function(){
+					var href = $("#city-select option:selected").val();
+					console.log(href);
+				});
 			});
 		</script>
 	</head>
@@ -23,8 +27,8 @@
 				<img src="img/content_img.jpg" />
 			</div>
 			<div class="select-div">
-				<select id="city-select" name="" onchange="window.location=this.value;">
-				</select>
+				<select id="city-select" name="" ></select><br/>
+				<button id="btn-submit">进入</button>
 			</div>
 			<div id="">
 				<p>&nbsp;&nbsp;&nbsp;&nbsp;加入你家乡的方言，点击<a href="https://github.com/wolf427/wolf427.github.com/blob/master/resources/dialect/default_appellation.json">这里<a>，复制下内容并修改其中的中文发送到wolf_fei@foxmail.com。将会产生你的专属家乡版。</p>

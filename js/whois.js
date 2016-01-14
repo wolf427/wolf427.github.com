@@ -233,15 +233,13 @@ function activeYN(function_yes,function_no){
 	});
 	$("#calculate_result").attr("disabled","disabled");
 	$("#btn-yes").bind("click",function(){
-		
 		resetAllButton();
-		$("#final-answer-display").text("");
+		$("#final-answer-display").html("<img class='answer-image'/>");
 		function_yes();
 	});
 	$("#btn-no").bind("click",function(){
-		
 		resetAllButton();
-		$("#final-answer-display").text("");
+		$("#final-answer-display").html("<img class='answer-image'/>");
 		function_no();
 	});
 }
@@ -334,9 +332,13 @@ function getFinalResult(){
 	
 	if (age=="unknown") {
 		if(level==0){
-			$("#final-answer-display").text("这人比你大么？");
-			activeYN(function(){age="big";getFinalResult();},function(){age="little";getFinalResult();});
-			return;
+			if(result[0]=="brother"||result[0]=="sister"||result[0]=="cousin_brother"||result[0]=="cousin_sister"){
+				$("#final-answer-display").text("这人比你大么？");
+				activeYN(function(){age="big";getFinalResult();},function(){age="little";getFinalResult();});
+				return;
+			}else{
+				age="0";
+			}
 		}else if(level==1){
 			if (branch=="f"&&result[0]=="uncle") {
 				$("#final-answer-display").text("这人比你爸大么？");
@@ -366,6 +368,7 @@ function getFinalResult(){
 	}
 	var textResult = appellations[finalResult];
 	if(textResult==null||textResult==""){
+		
 		textResult="未知";
 		var image_index;
 		var image_path = "";
@@ -373,6 +376,7 @@ function getFinalResult(){
 			image_index = Math.floor(Math.random() * ( 0 + 1));
 			image_path = "gay"+image_index+".jpg";
 		}else{
+			
 			image_index = Math.floor(Math.random() * ( 4 + 1));
 			image_path = "img"+image_index+".jpg";
 		}
