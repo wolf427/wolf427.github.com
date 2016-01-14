@@ -6,6 +6,27 @@ var branch = "";
 var age = "0";
 var currentSex = "0";
 
+var relations_network;
+$.get("resources/relations.json",function(data){
+	relations_network = data;
+},"json");
+
+var appellations;
+function initAppellations(address){
+	$.get("resources/dialect_appellation.json",function(data){
+		var entry = data[address];
+		var appellation_url = "resources/dialect/";
+		if(entry == null){
+			entry = data["default"];
+		}
+		appellation_url += (entry["appellation_file"]+".json");
+		$.get(appellation_url,function(data){
+			appellations = data;
+		},"json");
+		$("head title").append(entry["address_name"]);
+	},"json");
+}
+
 function resetParameters(){
 	level = 0;
 	branch = "";
@@ -93,10 +114,7 @@ function bindClick(){
 }
 
 
-var relations_network;
-$.get("resources/relations.json",function(data){
-	relations_network = data;
-},"json");
+
 
 function getResult(){
 	
@@ -303,12 +321,6 @@ function removeBranch(result,branch){
 	}
 	return branch;
 }
-
-var appellations;
-$.get("resources/appellation.json",function(data){
-	appellations = data;
-},"json");
-
 
 function getFinalResult(){
 	if (level>4) {

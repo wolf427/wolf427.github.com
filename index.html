@@ -14,10 +14,16 @@
 					getResult();
 				});
 				var href = window.location.href;
-				var dialect = href.substr(href.indexOf("?"));
-				if(dialect==null||dialect==""){
-					dialect = "default";
+				var address_index = href.indexOf("?dialect=");
+				if(address_index==-1){
+					dialect_address = "default";
+				}else{
+					var dialect_address = href.substr(address_index+9);
+					if(dialect_address==null||dialect_address==""){
+						dialect_address = "default";
+					}
 				}
+				initAppellations(dialect_address);
 			});
 			
 		</script>
