@@ -336,7 +336,13 @@ function getFinalResult(){
 				$("#final-answer-display").text("这人比你大么？");
 				activeYN(function(){age="big";getFinalResult();},function(){age="little";getFinalResult();});
 				return;
-			}else{
+			}else if(result[0]=="brother_wife"||result[0]=="sister_husband"){
+				$("#final-answer-display").text("他/她配偶比你大么？");
+				branch = "";
+				activeYN(function(){age="big";getFinalResult();},function(){age="little";getFinalResult();});
+				return;
+			}
+			else{
 				age="0";
 			}
 		}else if(level==1){
@@ -347,8 +353,13 @@ function getFinalResult(){
 			} else{
 				age="big";
 			}
-		}else if (level<0){
+		}else if (level=-1){
 			age = "0";
+			if(branch=="m" && (result[0]=="brother_son"||result[0]=="brother_daughter")){
+				var innerResult = result.pop();
+				result.push(innerResult.replace("brother","sister"));
+			}
+			branch = "";
 		}else{
 			age = "0";
 		}

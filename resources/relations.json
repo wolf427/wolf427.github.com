@@ -102,13 +102,24 @@
 	"cousin_brother":{
 		"r_father":["uncle","aunt_husband"],
 		"r_mother":["uncle_wife","aunt"],
-		"r_son":"cousin_brother",
-		"r_daughter":"cousin_sister",
+		"r_son":"brother_son",
+		"r_daughter":"brother_daughter",
 		"r_big_brother":"cousin_brother",
 		"r_little_brother":"cousin_brother",
 		"r_big_sister":"cousin_sister",
 		"r_little_sister":"cousin_sister",
 		"r_wife":"brother_wife"
+	},
+	"cousin_sister":{
+		"r_father":["uncle","aunt_husband"],
+		"r_mother":["uncle_wife","aunt"],
+		"r_son":"sister_son",
+		"r_daughter":"sister_daughter",
+		"r_big_brother":"cousin_brother",
+		"r_little_brother":"cousin_brother",
+		"r_big_sister":"cousin_sister",
+		"r_little_sister":"cousin_sister",
+		"r_husband":"sister_husband"
 	},
 	"son":{
 		"r_father":"me",

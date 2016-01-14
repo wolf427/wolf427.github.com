@@ -32,6 +32,10 @@
 	"sister_son":"外甥",
 	"brother_daughter":"侄女",
 	"sister_daughter":"外甥女",
+	"brother_son_wife":"侄媳妇",
+	"sister_son_wife":"外甥媳妇",
+	"brother_daughter_husband":"侄女婿",
+	"sister_daughter_husband":"外甥女婿",
 	"grand_father_f":"爷爷",
 	"grand_mother_f":"奶奶",
 	"grand_father_m":"外公",
@@ -90,5 +94,9 @@
 	"grand_grand_father_m":"太爷爷",
 	"grand_grand_father_father_f":"高祖",
 	"grand_grand_father_mother_f":"高祖母",
-	"grand_grand_mother_mother_m":"祖太婆"
+	"grand_grand_mother_mother_m":"祖太婆",
+	"big_brother_wife":"嫂子",
+	"little_brother_wife":"弟妹",
+	"big_sister_husband":"姐夫",
+	"little_sister_husband":"妹夫"
 }
