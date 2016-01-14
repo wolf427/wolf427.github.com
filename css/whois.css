@@ -68,6 +68,7 @@ html,body,.main
 	height: 100%;
 }
 .main .main-title{
+	margin-top: 5%;
 	width: 100%;
 	height: 33%;
 	text-align: center;
@@ -75,8 +76,16 @@ html,body,.main
 .main-title p{
 	font-size: 2em;
 }
+.main-title img{
+	height: 70%;
+}
 .select-div{
 	text-align: center;
+	height: 20%;
+}
+.select-div select{
+	width: 20em;
+	height: 3em;
 }
 
 .dialect-page{
