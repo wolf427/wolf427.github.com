@@ -378,7 +378,6 @@ function getFinalResult(){
 		finalResult = result[0];
 	}
 	var textResult = appellations[finalResult];
-	console.log(finalResult);
 	if(textResult==null||textResult==""){
 		
 		textResult="未知";
