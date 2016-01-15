@@ -19,6 +19,10 @@
 					dialect_address = "default";
 				}else{
 					var dialect_address = href.substr(address_index+9);
+					var useless_part_index = dialect_address.indexOf("&");
+					if(useless_part_index!=-1){
+						dialect_address = dialect_address.substr(0, useless_part_index);
+					}
 					if(dialect_address==null||dialect_address==""){
 						dialect_address = "default";
 					}
