@@ -1,4 +1,7 @@
 {
 	"default":{"address_name":"标准版","appellation_file":"default_appellation"},
-	"badong":{"address_name":"大巴东版","appellation_file":"badong_appellation"}
+	"badong":{"address_name":"大巴东版","appellation_file":"badong_appellation"},
+	"hunan":{"address_name":"湖南版","appellation_file":"hunan_appellation"},
+	"guangdong":{"address_name":"粤语版","appellation_file":"guangdong_appellation"},
+	"shanghai":{"address_name":"上海版","appellation_file":"shanghai_appellation"}
 }
