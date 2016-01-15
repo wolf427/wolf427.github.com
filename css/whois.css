@@ -67,26 +67,6 @@ html,body,.main
 .answer-image{
 	height: 100%;
 }
-.main .main-title{
-	margin-top: 5%;
-	width: 100%;
-	height: 33%;
-	text-align: center;
-}
-.main-title p{
-	font-size: 2em;
-}
-.main-title img{
-	height: 70%;
-}
-.select-div{
-	text-align: center;
-	height: 20%;
-}
-.select-div select{
-	width: 20em;
-	height: 3em;
-}
 
 .dialect-page{
 	position: fixed;
@@ -97,6 +77,27 @@ html,body,.main
 	color:#777777;
 }
 
+.main .main-title{
+	margin-top: 5%;
+	width: 100%;
+	height: 33%;
+	text-align: center;
+}
+.main .main-title p{
+	font-size: 2em;
+}
+.main .main-title img{
+	height: 70%;
+}
+.main .select-div{
+	text-align: center;
+	height: auto;
+}
+.main .select-div select{
+	width: 20em;
+	height: 3em;
+}
+
 #btn-submit{
 	margin-top: 1em;
 	width: 60%;
@@ -104,4 +105,17 @@ html,body,.main
 	border: 1px solid #000000;
 	border-radius:10px;
 	font-size: 1.5em;
+	height: 1.5em;
+}
+
+.contact-us-div{
+	margin-top: 0.3em;
+	height: auto;
+	text-align: center;
+}
+.contact-us-div p{
+	text-align: left;
+}
+.contact-us-div .qrcode-image{
+	height: auto;
 }
