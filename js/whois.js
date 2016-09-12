@@ -7,7 +7,7 @@ var age = "0";
 var currentSex = "0";
 
 var relations_network;
-$.get("resources/relations.json",function(data){
+$.get("json/relations.json",function(data){
 	relations_network = data;
 },"json");
 
@@ -19,9 +19,9 @@ $.get("resources/relations.json",function(data){
 
 var appellations;
 function initAppellations(address){
-	$.get("resources/dialect_appellation.json",function(data){
+	$.get("json/dialect_appellation.json",function(data){
 		var entry = data[address];
-		var appellation_url = "resources/dialect/";
+		var appellation_url = "json/dialect/";
 		if(entry == null){
 			entry = data["default"];
 		}
