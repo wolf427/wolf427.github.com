@@ -4,7 +4,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0"/>
 		<title>"叫人"计算器</title>
-		<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.1.min.js"></script>
+		<script src="http://lib.sinaapp.com/js/jquery/1.9.1/jquery-1.9.1.min.js"></script>
 		<link rel="stylesheet" type="text/css" href="css/whois.css"/>
 		<script src="js/whois.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript">
@@ -13,20 +13,23 @@
 				$("#calculate_result").click(function(){
 					getResult();
 				});
-				var href = window.location.href;
-				var address_index = href.indexOf("?dialect=");
-				if(address_index==-1){
-					dialect_address = "default";
-				}else{
-					var dialect_address = href.substr(address_index+9);
-					var useless_part_index = dialect_address.indexOf("&");
-					if(useless_part_index!=-1){
-						dialect_address = dialect_address.substr(0, useless_part_index);
-					}
-					if(dialect_address==null||dialect_address==""){
-						dialect_address = "default";
-					}
-				}
+//				var href = window.location.href;
+//				var address_index = href.indexOf("?dialect=");
+//				if(address_index==-1){
+//					dialect_address = "default";
+//				}else{
+//					var dialect_address = href.substr(address_index+9);
+//					var useless_part_index = dialect_address.indexOf("&");
+//					if(useless_part_index!=-1){
+//						dialect_address = dialect_address.substr(0, useless_part_index);
+//					}
+//					if(dialect_address==null||dialect_address==""){
+//						dialect_address = "default";
+//					}
+//				}
+				var dialect_address=getUrlParam("dialect");
+				if (dialect_address==null||dialect_address=="")
+					dialect_address = "default"
 				initAppellations(dialect_address);
 			});
 			  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
